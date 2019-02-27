@@ -35,14 +35,14 @@ if ($environment !== 'production') {
 
 $whoops->register();
 
-$dispatcher = simpleDispatcher(function (RouteCollector $collector) {
-    $collector->addRoute('GET', '/hello-world', function () {
-        echo 'Hello World!';
-    });
-    $collector->addRoute('GET', '/another-route', function () {
-        echo 'This works too!';
-    });
-});
+$routesCallback = function (RouteCollector $collector) {
+    $routes = include('routes.php');
+    foreach ($routes as $route) {
+        $collector->addRoute($route[0], $route[1], $route[2]);
+    }
+};
+
+$dispatcher = simpleDispatcher($routesCallback);
 
 $request = (new RequestFactory())->createHttpRequest();
 $response = new Response;
