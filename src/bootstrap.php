@@ -3,6 +3,8 @@ declare(strict_types=1);
 
 namespace App;
 
+use Nette\Http\RequestFactory;
+use Nette\Http\Response;
 use Whoops\Handler\PrettyPageHandler;
 use Whoops\Run;
 
@@ -30,4 +32,18 @@ if ($environment !== 'production') {
 
 $whoops->register();
 
-throw new \Exception('Something went wrong!');
+$request = (new RequestFactory())->createHttpRequest();
+$response = new Response();
+
+$response->setCode(500);
+$response->setContentType('text/plain', 'UTF-8');
+
+foreach ($response->getHeaders() as $header) {
+    header($header, false);
+}
+
+echo 'Hello: ' . $request->getRemoteAddress() . PHP_EOL;
+echo 'QueryParams:' . PHP_EOL;
+foreach ($request->getQuery() as $key => $value) {
+    echo '    ' . $key . ' => ' . $value . PHP_EOL;
+}
