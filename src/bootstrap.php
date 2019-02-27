@@ -3,6 +3,9 @@ declare(strict_types=1);
 
 namespace App;
 
+use FastRoute\Dispatcher;
+use FastRoute\RouteCollector;
+use function FastRoute\simpleDispatcher;
 use Nette\Http\RequestFactory;
 use Nette\Http\Response;
 use Whoops\Handler\PrettyPageHandler;
@@ -32,18 +35,35 @@ if ($environment !== 'production') {
 
 $whoops->register();
 
+$dispatcher = simpleDispatcher(function (RouteCollector $collector) {
+    $collector->addRoute('GET', '/hello-world', function () {
+        echo 'Hello World!';
+    });
+    $collector->addRoute('GET', '/another-route', function () {
+        echo 'This works too!';
+    });
+});
+
 $request = (new RequestFactory())->createHttpRequest();
-$response = new Response();
+$response = new Response;
 
-$response->setCode(500);
-$response->setContentType('text/plain', 'UTF-8');
-
-foreach ($response->getHeaders() as $header) {
-    header($header, false);
-}
-
-echo 'Hello: ' . $request->getRemoteAddress() . PHP_EOL;
-echo 'QueryParams:' . PHP_EOL;
-foreach ($request->getQuery() as $key => $value) {
-    echo '    ' . $key . ' => ' . $value . PHP_EOL;
+$routeInfo = $dispatcher->dispatch($request->getMethod(), $request->getUrl()->getPath());
+switch ($routeInfo[0]) {
+    case Dispatcher::NOT_FOUND:
+        $response->setCode(404);
+        $response->setContentType('text/plain', 'UTF-8');
+        echo '404 - Page Not Found: ' . PHP_EOL;
+        echo 'Path: ' . $request->getUrl()->getPath() . PHP_EOL;
+        echo 'Path Info: ' . $request->getUrl()->getPathInfo() . PHP_EOL;
+        echo 'Relative URL: ' . $request->getUrl()->getRelativeUrl() . PHP_EOL;
+        break;
+    case Dispatcher::METHOD_NOT_ALLOWED:
+        $response->setCode(405);
+        echo '405 - Method Not Allowed';
+        break;
+    case Dispatcher::FOUND:
+        $handler = $routeInfo[1];
+        $vars = $routeInfo[2];
+        call_user_func($handler, $vars);
+        break;
 }
