@@ -62,8 +62,17 @@ switch ($routeInfo[0]) {
         echo '405 - Method Not Allowed';
         break;
     case Dispatcher::FOUND:
-        $handler = $routeInfo[1];
         $vars = $routeInfo[2];
+
+        if (is_array($routeInfo[1])) {
+            $className = $routeInfo[1][0];
+            $method = $routeInfo[1][1];
+            $class = new $className;
+            $class->$method($vars);
+            break;
+        }
+
+        $handler = $routeInfo[1];
         call_user_func($handler, $vars);
         break;
 }
