@@ -7,3 +7,7 @@ services:
     volumes:
       - ./:/usr/src/no-framework
     working_dir: /usr/src/no-framework
+    expose:
+      - "9000"
+    ports:
+      - "8000:8000"
