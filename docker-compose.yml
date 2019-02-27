@@ -1,0 +1,9 @@
+version: '3'
+
+services:
+
+  php:
+    build: .docker/php
+    volumes:
+      - ./:/usr/src/no-framework
+    working_dir: /usr/src/no-framework
