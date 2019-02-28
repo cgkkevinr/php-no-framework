@@ -6,8 +6,8 @@ namespace App;
 use FastRoute\Dispatcher;
 use FastRoute\RouteCollector;
 use function FastRoute\simpleDispatcher;
-use Nette\Http\RequestFactory;
-use Nette\Http\Response;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Whoops\Handler\PrettyPageHandler;
 use Whoops\Run;
 
@@ -44,22 +44,21 @@ $routesCallback = function (RouteCollector $collector) {
 
 $dispatcher = simpleDispatcher($routesCallback);
 
-$request = (new RequestFactory())->createHttpRequest();
+$request = Request::createFromGlobals();
 $response = new Response;
 
-$routeInfo = $dispatcher->dispatch($request->getMethod(), $request->getUrl()->getPath());
+$routeInfo = $dispatcher->dispatch($request->getMethod(), $request->getPathInfo());
 switch ($routeInfo[0]) {
     case Dispatcher::NOT_FOUND:
-        $response->setCode(404);
-        $response->setContentType('text/plain', 'UTF-8');
-        echo '404 - Page Not Found: ' . PHP_EOL;
-        echo 'Path: ' . $request->getUrl()->getPath() . PHP_EOL;
-        echo 'Path Info: ' . $request->getUrl()->getPathInfo() . PHP_EOL;
-        echo 'Relative URL: ' . $request->getUrl()->getRelativeUrl() . PHP_EOL;
+        $response->setStatusCode(404);
+        $response->headers->set('Content-Type', 'text/plain; charset=UTF-8');
+        $content  = '404 - Page Not Found' . PHP_EOL;
+        $content .= 'Path: ' . $request->getPathInfo() . PHP_EOL;
+        $response->setContent($content);
         break;
     case Dispatcher::METHOD_NOT_ALLOWED:
-        $response->setCode(405);
-        echo '405 - Method Not Allowed';
+        $response->setStatusCode(405);
+        $response->setContent('405 - Method Not Allowed');
         break;
     case Dispatcher::FOUND:
         $vars = $routeInfo[2];
@@ -67,8 +66,10 @@ switch ($routeInfo[0]) {
         if (is_array($routeInfo[1])) {
             $className = $routeInfo[1][0];
             $method = $routeInfo[1][1];
-            $class = new $className;
+            $class = new $className($response);
             $class->$method($vars);
+            $response->sendHeaders();
+            $response->sendContent();
             break;
         }
 
