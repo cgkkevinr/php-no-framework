@@ -44,8 +44,10 @@ $routesCallback = function (RouteCollector $collector) {
 
 $dispatcher = simpleDispatcher($routesCallback);
 
-$request = Request::createFromGlobals();
-$response = new Response;
+$injector = include('dependencies.php');
+
+$request = $injector->make(Request::class);
+$response = $injector->make(Response::class);
 
 $routeInfo = $dispatcher->dispatch($request->getMethod(), $request->getPathInfo());
 switch ($routeInfo[0]) {
@@ -66,7 +68,7 @@ switch ($routeInfo[0]) {
         if (is_array($routeInfo[1])) {
             $className = $routeInfo[1][0];
             $method = $routeInfo[1][1];
-            $class = new $className($response);
+            $class = $injector->make($className);
             $class->$method($vars);
             break;
         }
@@ -76,5 +78,4 @@ switch ($routeInfo[0]) {
         break;
 }
 
-$response->sendHeaders();
-$response->sendContent();
+$response->send();
