@@ -68,8 +68,6 @@ switch ($routeInfo[0]) {
             $method = $routeInfo[1][1];
             $class = new $className($response);
             $class->$method($vars);
-            $response->sendHeaders();
-            $response->sendContent();
             break;
         }
 
@@ -77,3 +75,6 @@ switch ($routeInfo[0]) {
         call_user_func($handler, $vars);
         break;
 }
+
+$response->sendHeaders();
+$response->sendContent();
