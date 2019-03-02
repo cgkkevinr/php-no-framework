@@ -32,7 +32,7 @@ class Home
     public function show()
     {
         $data = ['name' => $this->request->query->get('name', 'stranger')];
-        $content = $this->renderer->render('index.html.twig', $data);
+        $content = $this->renderer->render('index', $data);
         return $this->response->setContent($content);
     }
 }
