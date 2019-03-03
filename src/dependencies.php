@@ -30,8 +30,10 @@ $injector->define(\App\Page\FilePageReader::class, [
 $injector->alias(\App\Template\Renderer::class, \App\Template\TwigRenderer::class);
 $injector->alias(\App\Template\FrontendRenderer::class, \App\Template\FrontendTwigRenderer::class);
 $injector->alias(\App\Page\PageReader::class, \App\Page\FilePageReader::class);
+$injector->alias(\App\Menu\MenuReader::class, \App\Menu\ArrayMenuReader::class);
 
 $injector->share(\App\Template\TwigRenderer::class);
 $injector->share(\App\Page\FilePageReader::class);
+$injector->share(\App\Menu\ArrayMenuReader::class);
 
 return $injector;
