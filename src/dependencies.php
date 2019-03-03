@@ -20,6 +20,17 @@ $injector->define(\App\Template\TwigRenderer::class, [
         ]
     )
 ]);
+
+$injector->define(\App\Page\FilePageReader::class, [
+    [
+        'pages' => __DIR__ . '/../pages/'
+    ]
+]);
+
 $injector->alias(\App\Template\Renderer::class, \App\Template\TwigRenderer::class);
+$injector->alias(\App\Page\PageReader::class, \App\Page\FilePageReader::class);
+
+$injector->share(\App\Template\TwigRenderer::class);
+$injector->share(\App\Page\FilePageReader::class);
 
 return $injector;
