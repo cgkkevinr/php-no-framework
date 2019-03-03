@@ -31,7 +31,12 @@ class Home
 
     public function show()
     {
-        $data = ['name' => $this->request->query->get('name', 'stranger')];
+        $data = [
+            'name' => $this->request->query->get('name', 'stranger'),
+            'menuItems' => [
+                ['href' => '/', 'text' => 'Homepage']
+            ]
+        ];
         $content = $this->renderer->render('index', $data);
         return $this->response->setContent($content);
     }

@@ -1,2 +1,6 @@
 <h1>Hello World!</h1>
 <p>Hello {{ name }}</p>
+
+{% for item in menuItems %}
+    <a href="{{ item.href }}">{{ item.text }}</a>
+{% endfor %}
