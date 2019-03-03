@@ -9,4 +9,5 @@ return [
     ['GET', '/another-route', function () {
         echo 'This works too!';
     }],
+    ['GET', '/page/{slug}', [\App\Controller\Page::class, 'show']]
 ];
