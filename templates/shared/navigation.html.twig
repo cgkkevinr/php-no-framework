@@ -1,3 +1,9 @@
-{% for item in menuItems %}
-    <a href="{{ item.href }}">{{ item.text }}</a>
-{% endfor %}
+<div id="menu">
+    <div class="pure-menu">
+        <ul class="pure-menu-list">
+            {% for item in menuItems %}
+                <li class="pure-menu-item"><a href="{{ item.href }}" class="pure-menu-link">{{ item.text }}</a></li>
+            {% endfor %}
+        </ul>
+    </div>
+</div>
