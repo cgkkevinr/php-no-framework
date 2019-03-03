@@ -3,7 +3,7 @@ declare(strict_types=1);
 
 namespace App\Controller;
 
-use App\Template\Renderer;
+use App\Template\FrontendRenderer;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -18,11 +18,11 @@ class Home
      */
     private $response;
     /**
-     * @var Renderer
+     * @var FrontendRenderer
      */
     private $renderer;
 
-    public function __construct(Request $request, Response $response, Renderer $renderer)
+    public function __construct(Request $request, Response $response, FrontendRenderer $renderer)
     {
         $this->request = $request;
         $this->response = $response;
@@ -32,10 +32,7 @@ class Home
     public function show()
     {
         $data = [
-            'name' => $this->request->query->get('name', 'stranger'),
-            'menuItems' => [
-                ['href' => '/', 'text' => 'Homepage']
-            ]
+            'name' => $this->request->query->get('name', 'stranger')
         ];
         $content = $this->renderer->render('index', $data);
         return $this->response->setContent($content);

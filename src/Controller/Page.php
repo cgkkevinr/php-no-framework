@@ -5,7 +5,7 @@ namespace App\Controller;
 
 use App\Page\PageException;
 use App\Page\PageReader;
-use App\Template\Renderer;
+use App\Template\FrontendRenderer;
 use Symfony\Component\HttpFoundation\Response;
 
 class Page
@@ -15,7 +15,7 @@ class Page
      */
     private $reader;
     /**
-     * @var Renderer
+     * @var FrontendRenderer
      */
     private $renderer;
     /**
@@ -23,7 +23,7 @@ class Page
      */
     private $response;
 
-    public function __construct(PageReader $reader, Renderer $renderer, Response $response)
+    public function __construct(PageReader $reader, FrontendRenderer $renderer, Response $response)
     {
         $this->reader = $reader;
         $this->renderer = $renderer;
