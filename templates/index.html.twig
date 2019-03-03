@@ -1,6 +1,6 @@
-<h1>Hello World!</h1>
-<p>Hello {{ name }}</p>
+{% extends "shared/base.html.twig" %}
 
-{% for item in menuItems %}
-    <a href="{{ item.href }}">{{ item.text }}</a>
-{% endfor %}
+{% block content %}
+    <h1>Hello World!</h1>
+    <p>Hello {{ name }}</p>
+{% endblock %}
