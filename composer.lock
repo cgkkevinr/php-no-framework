@@ -162,16 +162,16 @@
         },
         {
             "name": "rdlowrey/auryn",
-            "version": "v1.4.2",
+            "version": "v1.4.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/rdlowrey/auryn.git",
-                "reference": "8c4dc07943599ba84f4f89eab8cf43efeef80395"
+                "reference": "520bb1dc4fad1af39892422923bf4cd3b604ed77"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/rdlowrey/auryn/zipball/8c4dc07943599ba84f4f89eab8cf43efeef80395",
-                "reference": "8c4dc07943599ba84f4f89eab8cf43efeef80395",
+                "url": "https://api.github.com/repos/rdlowrey/auryn/zipball/520bb1dc4fad1af39892422923bf4cd3b604ed77",
+                "reference": "520bb1dc4fad1af39892422923bf4cd3b604ed77",
                 "shasum": ""
             },
             "require": {
@@ -180,7 +180,7 @@
             "require-dev": {
                 "athletic/athletic": "~0.1",
                 "fabpot/php-cs-fixer": "~1.9",
-                "phpunit/phpunit": "^4.7"
+                "phpunit/phpunit": "^4.8"
             },
             "type": "library",
             "autoload": {
@@ -194,10 +194,10 @@
             ],
             "authors": [
                 {
-                    "name": "Dan Ackroyd",
-                    "email": "Danack@basereality.com",
-                    "homepage": "http://www.basereality.com",
-                    "role": "Developer"
+                    "name": "Daniel Lowrey",
+                    "email": "rdlowrey@gmail.com",
+                    "homepage": "https://github.com/rdlowrey",
+                    "role": "Creator / Main Developer"
                 },
                 {
                     "name": "Levi Morrison",
@@ -206,10 +206,10 @@
                     "role": "Developer"
                 },
                 {
-                    "name": "Daniel Lowrey",
-                    "email": "rdlowrey@gmail.com",
-                    "homepage": "https://github.com/rdlowrey",
-                    "role": "Creator / Main Developer"
+                    "name": "Dan Ackroyd",
+                    "email": "Danack@basereality.com",
+                    "homepage": "http://www.basereality.com",
+                    "role": "Developer"
                 }
             ],
             "description": "Auryn is a dependency injector for bootstrapping object-oriented PHP applications.",
@@ -219,7 +219,11 @@
                 "dic",
                 "ioc"
             ],
-            "time": "2017-05-15T06:26:46+00:00"
+            "support": {
+                "issues": "https://github.com/rdlowrey/auryn/issues",
+                "source": "https://github.com/rdlowrey/auryn/tree/v1.4.3"
+            },
+            "time": "2020-12-21T21:00:10+00:00"
         },
         {
             "name": "symfony/http-foundation",
@@ -647,5 +651,6 @@
     "platform": {
         "php": ">=7.2.0"
     },
-    "platform-dev": []
+    "platform-dev": [],
+    "plugin-api-version": "2.0.0"
 }
